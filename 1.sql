@@ -25,8 +25,10 @@ GRANT CREATE SESSION,
       GRANT ANY OBJECT PRIVILEGE,
       ADMINISTER DATABASE TRIGGER,
       CREATE SEQUENCE ,
+      CREATE FUNCTION,
       DBA
 TO Manager_Role;
+GRANT CREATE FUNCTION TO MANAGER_ROLE
 --
 GRANT Manager_Role , DBA  TO MANAGER;
 --------------------------------------
@@ -98,6 +100,14 @@ CREATE TABLE AuditTrail (
   old_data VARCHAR2(200),
   new_data VARCHAR2(200),
   action_date DATE
+);
+
+CREATE TABLE treatments(
+  id NUMBER GENERATED ALWAYS AS IDENTITY,
+    patient_id NUMBER REFERENCES USer1.patients(id),
+    doctor_id NUMBER REFERENCES MANAGER.doctors(id),
+    treatment_description VARCHAR(255),
+    cost NUMBER
 );
 --
 CONN User2/123@//localhost:1521/ORCLPDB 
