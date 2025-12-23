@@ -10,7 +10,7 @@ as
     total_discharges number;
 
     CURSOR top_doctors_cursor IS
-    select d.id, count(d.id) as treatments_count where Manager.Doctors d join Manager.AuditTrail t on d.id = t.id order by count(d.id);
+    select d.id, count(d.id) as treatments_count from Manager.Doctors d join Manager.treatments t on d.id = t.doctor_id GROUP BY d.id order by count(d.id) ;
     top_doctors top_doctors_cursor%ROWTYPE;
 
     
@@ -27,15 +27,15 @@ BEGIN
     close discharge_cursor;
 
     OPEN discharge_cursor;
+    DBMS_OUTPUT.PUT_LINE ('Top 3 Doctors: \n');
     loop
-        FETCH top_doctors_cursor into top_doctors
+        FETCH top_doctors_cursor into top_doctors;
         EXIT WHEN top_doctors_cursor %ROWCOUNT > 3;
-        DBMS_OUTPUT.PUT_LINE ('Top 3 Doctors: \n');
         DBMS_OUTPUT.PUT_LINE (top_doctors.id || ' ' || top_doctors.treatments_count || ' Treatments');
     end loop;
     close top_doctors_cursor;
 end;
 /
 
-EXEC generate_performace_report
+EXEC generate_performace_report;
 
