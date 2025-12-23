@@ -17,13 +17,13 @@ BEGIN
 
     OPEN admission_cursor;
     FETCH admission_cursor into admissions;
-    select count(id) into total_admissions FROM MANAGER.AUDITTRAIL;
+    select count(id) into total_admissions FROM admissions;
     DBMS_OUTPUT.PUT_LINE ('Total Admissions = ' || total_admissions);
     close admission_cursor;
 
     OPEN discharge_cursor;
     FETCH discharge_cursor into discharges;
-    select count(id) into total_discharges FROM MANAGER.AUDITTRAIL;
+    select count(id) into total_discharges FROM discharges;
     DBMS_OUTPUT.PUT_LINE ('Total Discharges = ' || total_discharges);
     close discharge_cursor;
 end;
