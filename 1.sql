@@ -87,10 +87,10 @@ status VARCHAR2(20)
 );
 
 create table Available_Hours(
-    id              int primary key,
-    doctor_id       number references Doctors(id) on delete cascade,
+    id              int primary key GENERATED ALWAYS AS IDENTITY,
+    doctor_id       number references Doctors(id) on delete set null,
     weekday         varchar2(10),
-    hours_avaliable number
+    hours_available number
 );
 --
 CREATE TABLE AuditTrail (
