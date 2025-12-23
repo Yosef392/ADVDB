@@ -1,4 +1,4 @@
-create or replace procedure generate_performace_report()
+create or replace procedure generate_performace_report
 as
 
     CURSOR admission_cursor IS
@@ -16,17 +16,18 @@ as
 BEGIN
 
     OPEN admission_cursor;
-    FETCH admission_cursor into admission;
-    select count(id) into total_admissions;
+    FETCH admission_cursor into admissions;
+    select count(id) into total_admissions FROM MANAGER.AUDITTRAIL;
     DBMS_OUTPUT.PUT_LINE ('Total Admissions = ' || total_admissions);
     close admission_cursor;
 
     OPEN discharge_cursor;
-    FETCH discharge_cursor into discharge;
-    select count(id) into total_discharges;
+    FETCH discharge_cursor into discharges;
+    select count(id) into total_discharges FROM MANAGER.AUDITTRAIL;
     DBMS_OUTPUT.PUT_LINE ('Total Discharges = ' || total_discharges);
     close discharge_cursor;
 end;
 /
 
+EXEC generate_performace_report
 
