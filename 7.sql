@@ -13,7 +13,7 @@ as
     select round(AVG(d.action_date - a.action_date)) as avg_stay_days
     from Manager.AuditTrail a
     JOIN MANAGER.AuditTrail d 
-    ON REGEXP_SUBSTR(a.new_data, 'Patient ID: ([0-9]+)...') = REGEXP_SUBSTR(d.new_data, 'Patient ID: ([0-9]+)...')
+    ON REGEXP_SUBSTR(a.new_data, 'Patient ID: ([0-9]+)') = REGEXP_SUBSTR(d.new_data, 'Patient ID: ([0-9]+)')
     where a.operation <> d.operation
     and d.action_date > a.action_date;
     avg_stay_days number;
@@ -25,7 +25,7 @@ as
 
     
 BEGIN
-
+    DBMS_OUTPUT.PUT_LINE('Hospital Performance Report');
     OPEN admission_cursor;
     FETCH admission_cursor into total_admissions;
     DBMS_OUTPUT.PUT_LINE ('Total Admissions = ' || total_admissions);
@@ -52,4 +52,3 @@ BEGIN
 end;
 /
 EXEC generate_performace_report;
-

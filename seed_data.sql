@@ -1,50 +1,33 @@
-
-
 SET SERVEROUTPUT ON;
 
+INSERT INTO Manager.Doctors (name, specialty) VALUES ('Dr. Gregory House', 'Diagnostician');
+INSERT INTO Manager.Doctors (name, specialty) VALUES ('Dr. Helal Ahmed', 'General Surgery');
+INSERT INTO Manager.Doctors (name, specialty) VALUES ('Dr. Toaa', 'Neurology');
 
-CONN Manager/123@//localhost:1521/XEPDB1;
+SELECT * FROM MANAGER.doctors;
 
-DELETE FROM Manager.AuditTrail;
-DELETE FROM Manager.Warnings;
-DELETE FROM Manager.Treatments;
-DELETE FROM Manager.Appointments;
-DELETE FROM Manager.Available_Hours;
-DELETE FROM Manager.Doctors;
-DELETE FROM User1.Patients;
-DELETE FROM User1.Rooms;
+INSERT INTO MANAGER.Available_Hours (doctor_id, weekday, hours_available) VALUES (1, 'MONDAY', 8);
+INSERT INTO MANAGER.Available_Hours (doctor_id, weekday, hours_available) VALUES (1, 'TUESDAY', 8);
+INSERT INTO MANAGER.Available_Hours (doctor_id, weekday, hours_available) VALUES (1, 'WEDNESDAY', 8);
+INSERT INTO MANAGER.Available_Hours (doctor_id, weekday, hours_available) VALUES (1, 'THURSDAY', 8);
+INSERT INTO MANAGER.Available_Hours (doctor_id, weekday, hours_available) VALUES (1, 'FRIDAY', 8);
 
-COMMIT;
+INSERT INTO MANAGER.Available_Hours (doctor_id, weekday, hours_available) VALUES (2, 'MONDAY', 8);
+INSERT INTO MANAGER.Available_Hours (doctor_id, weekday, hours_available) VALUES (2, 'TUESDAY', 8);
+INSERT INTO MANAGER.Available_Hours (doctor_id, weekday, hours_available) VALUES (2, 'WEDNESDAY', 8);
+INSERT INTO MANAGER.Available_Hours (doctor_id, weekday, hours_available) VALUES (2, 'THURSDAY', 8);
+INSERT INTO MANAGER.Available_Hours (doctor_id, weekday, hours_available) VALUES (2, 'FRIDAY', 8);
 
 
+INSERT INTO MANAGER.Available_Hours (doctor_id, weekday, hours_available) VALUES (3, 'MONDAY', 8);
+INSERT INTO MANAGER.Available_Hours (doctor_id, weekday, hours_available) VALUES (3, 'TUESDAY', 2);
+INSERT INTO MANAGER.Available_Hours (doctor_id, weekday, hours_available) VALUES (3, 'WEDNESDAY', 8);
+INSERT INTO MANAGER.Available_Hours (doctor_id, weekday, hours_available) VALUES (3, 'THURSDAY', 8);
+INSERT INTO MANAGER.Available_Hours (doctor_id, weekday, hours_available) VALUES (3, 'FRIDAY', 8);
 
-INSERT INTO Manager.Doctors (id, name, specialty) VALUES (1, 'Dr. Gregory House', 'Diagnostician');
-INSERT INTO Manager.Doctors (id, name, specialty) VALUES (2, 'Dr. Meredith Grey', 'General Surgery');
-INSERT INTO Manager.Doctors (id, name, specialty) VALUES (3, 'Dr. Stephen Strange', 'Neurology');
-
-INSERT INTO Manager.Available_Hours (doctor_id, weekday, hours_available) VALUES (1, 'MONDAY', 5);
-INSERT INTO Manager.Available_Hours (doctor_id, weekday, hours_available) VALUES (1, 'WEDNESDAY', 5);
-INSERT INTO Manager.Available_Hours (doctor_id, weekday, hours_available) VALUES (2, 'TUESDAY', 8);
-INSERT INTO Manager.Available_Hours (doctor_id, weekday, hours_available) VALUES (3, 'FRIDAY', 3);
-
-COMMIT;
-
--- =======================================================
--- STEP 4: INSERT ROOMS
--- =======================================================
-CONN User1/123@//localhost:1521/XEPDB1;
-
--- Insert Rooms (User1)
--- 2 ICU beds, 2 General beds, 1 VIP bed
-INSERT INTO User1.Rooms (type, capacity, availability) VALUES ('ICU', 1, 'Available');
-INSERT INTO User1.Rooms (type, capacity, availability) VALUES ('ICU', 1, 'Available');
-INSERT INTO User1.Rooms (type, capacity, availability) VALUES ('General', 2, 'Available');
-INSERT INTO User1.Rooms (type, capacity, availability) VALUES ('General', 2, 'Available');
-INSERT INTO User1.Rooms (type, capacity, availability) VALUES ('VIP', 1, 'Available');
 
 COMMIT;
 
--- =======================================================
 -- STEP 5: INSERT PATIENTS (Triggers Admission Logic)
 -- =======================================================
 -- Note: The 'trg_patient_admission' trigger will automatically assign room_id 
@@ -88,5 +71,3 @@ INSERT INTO Manager.Appointments (patient_id, doctor_id, app_date, status)
 VALUES ((SELECT id FROM User1.Patients WHERE name='Bob Jones'), 2, SYSDATE + 2, 'Scheduled');
 
 COMMIT;
-
-PROMPT Seed Data Inserted Successfully.

@@ -2,7 +2,7 @@ CREATE OR REPLACE FUNCTION get_doctor_patient_count(p_doctor_id IN NUMBER)
 RETURN NUMBER AS
     v_total_patients NUMBER;
 BEGIN
-    -- Counts unique patient IDs across both appointments and treatments for this doctor
+
     SELECT COUNT(DISTINCT patient_id)
     INTO v_total_patients
     FROM Manager.Appointments WHERE doctor_id = p_doctor_id;
@@ -34,12 +34,10 @@ CREATE OR REPLACE PROCEDURE update_patient_status_by_bill(p_threshold IN NUMBER)
     v_count NUMBER := 0;
 BEGIN
     FOR r_pat IN c_high_bill_patients LOOP
-        -- Update patient status
         UPDATE User1.Patients
         SET status = 'High-Value'
         WHERE id = r_pat.id;
 
-        -- Log the status change in the AuditTrail table
         INSERT INTO Manager.AuditTrail (
             table_name,
             operation,
@@ -79,16 +77,13 @@ SELECT * FROM MANAGER.APPOINTMENTS;
 DECLARE
     v_p_count NUMBER;
 BEGIN
-    -- 1. Test the Function (for Doctor ID 1)
     v_p_count := get_doctor_patient_count(1);
     DBMS_OUTPUT.PUT_LINE('Unique patients for Doctor 1: ' || v_p_count);
 
-    -- 2. Test the Procedure (Update patients with bills > 400)
     update_patient_status_by_bill(400);
 END;
 /
 
--- Verify changes
 SELECT id, name, total_bill, status FROM User1.Patients;
 SELECT * FROM Manager.AuditTrail ORDER BY action_date DESC;
 
