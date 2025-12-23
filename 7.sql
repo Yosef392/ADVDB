@@ -2,28 +2,24 @@ create or replace procedure generate_performace_report
 as
 
     CURSOR admission_cursor IS
-    select id from MANAGER.AuditTrail where operation = 'ADMIT_PATIENT';
+    select count(id) from MANAGER.AuditTrail where operation = 'ADMIT_PATIENT';
 
     CURSOR discharge_cursor IS
-    select id from MANAGER.AuditTrail where operation = 'DISCHARGE';
+    select count(id) from MANAGER.AuditTrail where operation = 'DISCHARGE';
 
-    admissions MANAGER.AuditTrail.id%TYPE;
-    total_admissions number;
+    total_admissions MANAGER.AuditTrail.id%TYPE;
 
-    discharges MANAGER.AuditTrail.id%TYPE;
-    total_discharges number;
+    total_discharges MANAGER.AuditTrail.id%TYPE;
     
 BEGIN
 
     OPEN admission_cursor;
-    FETCH admission_cursor into admissions;
-    select count(id) into total_admissions FROM admissions;
+    FETCH admission_cursor into total_admissions;
     DBMS_OUTPUT.PUT_LINE ('Total Admissions = ' || total_admissions);
     close admission_cursor;
 
     OPEN discharge_cursor;
-    FETCH discharge_cursor into discharges;
-    select count(id) into total_discharges FROM discharges;
+    FETCH discharge_cursor into total_discharges;
     DBMS_OUTPUT.PUT_LINE ('Total Discharges = ' || total_discharges);
     close discharge_cursor;
 end;
