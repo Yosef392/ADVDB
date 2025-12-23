@@ -72,3 +72,6 @@ INSERT INTO User1.Rooms VALUES (6,'REG',     1,'Full');
 select * from User1.Rooms --work
 select * from Manager.AuditTrail; --not work;
 --
+
+SELECT * FROM AVAILABLE_HOURS;
+EXEC Schedule_Appointment(3,1,SYSDATE)
