@@ -44,7 +44,7 @@ INSERT INTO Manager.AuditTrail (
 table_name,
 operation,
 old_data,
-new_data,
+new_data, 
 action_date
 )
 VALUES (

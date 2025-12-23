@@ -77,7 +77,12 @@ create table Doctors (
     specialty       varchar(100),
 );
 
-
+create table Warnings(
+    id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    patient_id    NUMBER references USER1.Patients(id),
+    warning_reason varchar(1000),
+    warning_date  DATE DEFAULT SYSDATE
+);
 CREATE TABLE Appointments (
 id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 patient_id NUMBER REFERENCES User1.Patients(id),
