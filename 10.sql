@@ -87,3 +87,4 @@ END;
 SELECT id, name, total_bill, status FROM User1.Patients;
 SELECT * FROM Manager.AuditTrail ORDER BY action_date DESC;
 
+ROLLBACK;

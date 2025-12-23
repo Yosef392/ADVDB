@@ -4,8 +4,6 @@ INSERT INTO Manager.Doctors (name, specialty) VALUES ('Dr. Gregory House', 'Diag
 INSERT INTO Manager.Doctors (name, specialty) VALUES ('Dr. Helal Ahmed', 'General Surgery');
 INSERT INTO Manager.Doctors (name, specialty) VALUES ('Dr. Toaa', 'Neurology');
 
-SELECT * FROM MANAGER.doctors;
-
 INSERT INTO MANAGER.Available_Hours (doctor_id, weekday, hours_available) VALUES (1, 'MONDAY', 8);
 INSERT INTO MANAGER.Available_Hours (doctor_id, weekday, hours_available) VALUES (1, 'TUESDAY', 8);
 INSERT INTO MANAGER.Available_Hours (doctor_id, weekday, hours_available) VALUES (1, 'WEDNESDAY', 8);
