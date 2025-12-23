@@ -20,7 +20,7 @@ as
 
     CURSOR top_doctors_cursor IS
     select d.name as id, count(d.id) as treatments_count from Manager.Doctors d 
-    join Manager.treatments t on d.id = t.doctor_id GROUP BY d.id,d.name order by count(d.id) ;
+    join Manager.treatments t on d.id = t.doctor_id GROUP BY d.id,d.name order by count(d.id) desc;
     top_doctors top_doctors_cursor%ROWTYPE;
 
     
@@ -47,7 +47,6 @@ BEGIN
 
     OPEN pateint_stay_cursor;
     FETCH pateint_stay_cursor into avg_stay_days;
-    EXIT WHEN top_doctors_cursor%NOTFOUND;
     DBMS_OUTPUT.PUT_LINE ('Average patient stay duration (in days) '|| avg_stay_days);
     close pateint_stay_cursor;
 end;
